@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JqueryPiano</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        marquee{
+            top:10px;
+            position: absolute;
+            font-size:50px;
+            color:#0ff;
+            text-shadow: 5px 5px 5px #333;
+            cursor:pointer;
+        }
+        .box{
+            width: 600px;
+            height: 600px;
+            margin: 100px auto;
+            border-radius: 50px;
+            border:2px solid #000;
+            overflow:hidden;
+            font-size:100px;
+            user-select: none;
+        }
+        .box .main{
+            height: 200px;
+            background: #eee;
+            display:flex;
+        }
+        .box .top, .box .bottom{
+            height: 200px;
+            line-height: 200px;
+            box-sizing: border-box;
+            background: #111;
+            border-bottom:10px solid #f00;
+            color:#fff;
+            font-family:'Courier New', Courier, monospace;
+        }
+        .box .bottom{
+            text-align:right;
+            border-bottom:0;
+            border-top:10px solid #f00;
+        }
+        .box .main .whitekey {
+            flex:1;
+            border-right:1px solid #aaa;
+            position: relative;
+        }
+        .box .main .whitekey:last-of-type{
+            border-right:0;
+        }
+        .box .main .bkey{
+            pointer-events:none;
+            width: 50px;
+            height: 150px;
+            background: #000 !important;
+            box-shadow: 5px 5px 0 rgba(0,0,0,.5);
+            position:absolute;
+            z-index:999;
+            left:100%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <marquee behavior="alternate" direction="" title="点我我就会消失" scrollAmount=10>请先点击屏幕空白区域开始你的表演！</marquee>
+    <div class="box">
+        <div class="top">MY</div>
+        <div class="main">
+            <div class="whitekey">
+                <audio src="audio/1.mp3"></audio>
+                <div class="bkey"></div>
+            </div>
+            <div class="whitekey">
+                <audio src="audio/2.mp3"></audio>
+                <div class="bkey"></div>
+            </div>
+            <div class="whitekey">
+                <audio src="audio/3.mp3"></audio>
+            </div>
+            <div class="whitekey">
+                <audio src="audio/4.mp3"></audio>
+                <div class="bkey"></div>
+            </div>
+            <div class="whitekey">
+                <audio src="audio/5.mp3"></audio>
+                <div class="bkey"></div>
+            </div>
+            <div class="whitekey">
+                <audio src="audio/6.mp3"></audio>
+                <div class="bkey"></div>
+            </div>
+            <div class="whitekey">
+                <audio src="audio/7.mp3"></audio>
+            </div>
+
+        </div>
+        <div class="bottom">Piano</div>
+    </div>
+    <script src="lib/jquery-3.4.1.min.js"></script>
+    <script>
+        $('marquee').on('click', function() {
+            $(this).hide();
+        })
+        $('.main').on('mouseover', function(evt) {
+            var color = Math.floor(Math.random()*0xFFFFFF);
+            color = '#' + ('000000'+color.toString(16)).slice(-6);
+            var evt = evt || window.event;
+            evt.target.children[0].load();
+            evt.target.children[0].play();
+            evt.target.children[0].style.height = '145px';
+            evt.target.style.background = `${color}`;
+            evt.target.style.boxShadow = `0 10px 0 rgba(255, 255, 0, .6)`;
+        }).on('mouseout', function (evt) {
+            evt.target.style.background = '#eee';
+            evt.target.style.boxShadow = 'none';
+        })
+    </script>
+</body>
+</html>
